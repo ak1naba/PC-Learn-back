@@ -46,14 +46,23 @@ class UserController extends Controller
         return response()->json("success");
     }
 
-    public function changeAvatar(Request $request){
-        $path=$request->file('image')->store('user');
+    public function changeAvatar(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+
+        $path = $request->file('image')->store('user');
+
         $user = User::find(auth()->id());
-        if($user->avatar!='user/user_avatar.png'){
+
+        if ($user->avatar != 'user/user_avatar.png') {
             Storage::delete($user->avatar);
         }
-        $user->avatar=$path;
+
+        $user->avatar = $path;
         $user->save();
+
         return response()->json($user);
     }
     public function deleteUser(){

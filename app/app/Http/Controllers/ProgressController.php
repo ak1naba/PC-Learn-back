@@ -69,7 +69,7 @@ class ProgressController extends Controller
         if ($nextLesson) {
             return response()->json($nextLesson);
         } else {
-            return response()->json(['message' => 'Следующий урок не найден']);
+            return response()->json(['message' => 'Следующий урок не найден'], 404);
         }
     }
 
