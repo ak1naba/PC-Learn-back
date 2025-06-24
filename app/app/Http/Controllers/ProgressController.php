@@ -92,6 +92,33 @@ class ProgressController extends Controller
         }
     }
 
+    public function checkProgress(){
+        $user=auth()->user();
 
+        // Выборка по теории
+        $countLessonsTheory=Lesson::where('type_lesson_id',1)->count();
+        $countTheoryDone= Progress::where('user_id', $user->id)
+            ->where('status_id',2)
+            ->whereHas('lesson', function ($query) {
+                $query->where('type_lesson_id',1);
+            })
+            ->count();
+
+        // Выборка по практике
+        $countLessonsPractic=Lesson::where('type_lesson_id',2)->count();
+        $countPracticDone= Progress::where('user_id', $user->id)
+            ->where('status_id',2)
+            ->whereHas('lesson', function ($query) {
+                $query->where('type_lesson_id',2);
+            })
+            ->count();
+
+        return response()->json([
+            'countDoneTheory'=>$countTheoryDone,
+            'countTheory'=>$countLessonsTheory,
+            'countDonePractic'=>$countPracticDone,
+            'countPractic'=>$countLessonsPractic,
+        ]);
+    }
 
 }

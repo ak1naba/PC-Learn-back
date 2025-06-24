@@ -50,6 +50,9 @@ Route::group(['middleware'=>'auth:sanctum', 'throttle:180,1'], function(){
     Route::post('/game/progress',[ProgressController::class,'outUserProgressLessons']);
     Route::post('/progress/find-next',[ProgressController::class,'findNextLesson']);
     Route::post('/progress/done-lesson',[ProgressController::class,'doneLesson']);
+
+    // Прогресс
+    Route::get('/progress',[ProgressController::class,'checkProgress']);
 });
 
 Route::get('lessons',[LessonController::class, 'index']);
