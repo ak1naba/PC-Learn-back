@@ -1,4 +1,4 @@
-Laravel Blogs
+PC-Learn-back
 
 Стек: [php, laravel, postgres. nginx, docker, docker-compose]
 
